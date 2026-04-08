@@ -16,7 +16,6 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        default_schema: transactions
         dialect: org.hibernate.dialect.SQLServerDialect
     show-sql: false
   jackson:
