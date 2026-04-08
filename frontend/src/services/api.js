@@ -2,8 +2,9 @@ import axios from 'axios';
 
 // In Docker: nginx proxies /api/ → api-gateway container (same origin, port 3000)
 // In local dev (npm start): vite.config.js proxy handles /api/ → localhost:8080
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://nexabank-prod-api-gateway.azurewebsites.net';
 const api = axios.create({
-  baseURL: '',
+  baseURL: BASE_URL,
   timeout: 15000,
   headers: { 'Content-Type': 'application/json' },
 });
