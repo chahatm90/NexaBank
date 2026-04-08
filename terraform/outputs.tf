@@ -4,18 +4,13 @@ output "frontend_url" {
 }
 
 output "primary_api_gateway_url" {
-  description = "Primary API Gateway URL"
+  description = "API Gateway URL"
   value       = "https://${azurerm_linux_web_app.services_primary["api-gateway"].default_hostname}"
 }
 
-output "secondary_api_gateway_url" {
-  description = "Secondary API Gateway URL"
-  value       = "https://${azurerm_linux_web_app.services_secondary["api-gateway"].default_hostname}"
-}
-
-output "sql_failover_group_fqdn" {
-  description = "SQL Failover Group FQDN (read-write)"
-  value       = "${azurerm_mssql_failover_group.banking.name}.database.windows.net"
+output "sql_server_fqdn" {
+  description = "SQL Server FQDN"
+  value       = azurerm_mssql_server.primary.fully_qualified_domain_name
 }
 
 output "key_vault_uri" {
@@ -30,7 +25,7 @@ output "app_insights_instrumentation_key" {
 }
 
 output "primary_service_urls" {
-  description = "All primary service URLs"
+  description = "All service URLs"
   value = {
     for svc, app in azurerm_linux_web_app.services_primary :
     svc => "https://${app.default_hostname}"
