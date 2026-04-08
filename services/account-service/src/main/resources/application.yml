@@ -8,7 +8,7 @@ spring:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/banking}
     username: ${SPRING_DATASOURCE_USERNAME:banking}
     password: ${SPRING_DATASOURCE_PASSWORD:banking123}
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     hikari:
       maximum-pool-size: 10
   jpa:
@@ -17,7 +17,7 @@ spring:
     properties:
       hibernate:
         default_schema: accounts
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.SQLServerDialect
     show-sql: false
   jackson:
     default-property-inclusion: NON_NULL
