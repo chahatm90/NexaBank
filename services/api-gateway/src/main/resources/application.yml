@@ -1,6 +1,5 @@
 server:
   port: ${SERVER_PORT:8080}
-
 spring:
   application:
     name: api-gateway
@@ -12,38 +11,36 @@ spring:
             allowedOrigins: "*"
             allowedMethods: "*"
             allowedHeaders: "*"
+      httpclient:
+        connect-timeout: 10000
+        response-timeout: 60s
       routes:
         - id: user-service
-          uri: ${USER_SERVICE_URL:http://localhost:8081}
+          uri: ${USER_SERVICE_URL:https://nexabank-prod-user-service.azurewebsites.net}
           predicates:
             - Path=/api/v1/customers/**
           filters:
             - AddRequestHeader=X-Gateway-Source, banking-gateway
-
         - id: account-service
-          uri: ${ACCOUNT_SERVICE_URL:http://localhost:8082}
+          uri: ${ACCOUNT_SERVICE_URL:https://nexabank-prod-account-service.azurewebsites.net}
           predicates:
             - Path=/api/v1/accounts/**
           filters:
             - AddRequestHeader=X-Gateway-Source, banking-gateway
-
         - id: transaction-service
-          uri: ${TRANSACTION_SERVICE_URL:http://localhost:8083}
+          uri: ${TRANSACTION_SERVICE_URL:https://nexabank-prod-transaction-service.azurewebsites.net}
           predicates:
             - Path=/api/v1/transactions/**
           filters:
             - AddRequestHeader=X-Gateway-Source, banking-gateway
-
         - id: notification-service
-          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8084}
+          uri: ${NOTIFICATION_SERVICE_URL:https://nexabank-prod-notification-service.azurewebsites.net}
           predicates:
             - Path=/api/v1/notifications/**
           filters:
             - AddRequestHeader=X-Gateway-Source, banking-gateway
-
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
-
 management:
   endpoints:
     web:
@@ -54,7 +51,6 @@ management:
       show-details: always
     gateway:
       enabled: true
-
 logging:
   level:
     org.springframework.cloud.gateway: INFO
