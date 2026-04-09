@@ -1,16 +1,15 @@
 server:
   port: ${SERVER_PORT:8082}
-
 spring:
   application:
     name: account-service
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/banking}
-    username: ${SPRING_DATASOURCE_USERNAME:banking}
-    password: ${SPRING_DATASOURCE_PASSWORD:banking123}
+    url: ${SPRING_DATASOURCE_URL:jdbc:sqlserver://nexabank-prod-sqlsvr.database.windows.net:1433;database=banking;encrypt=true;trustServerCertificate=true}
+    username: ${SPRING_DATASOURCE_USERNAME:bankingadmin}
+    password: ${SPRING_DATASOURCE_PASSWORD:NexaBank@2024!}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 5
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,11 +19,9 @@ spring:
     show-sql: false
   jackson:
     default-property-inclusion: NON_NULL
-
 services:
   user-service:
-    url: ${USER_SERVICE_URL:http://localhost:8081}
-
+    url: ${USER_SERVICE_URL:https://nexabank-prod-user-service.azurewebsites.net}
 management:
   endpoints:
     web:
@@ -33,7 +30,6 @@ management:
   endpoint:
     health:
       show-details: always
-
 logging:
   level:
     com.banking: DEBUG
