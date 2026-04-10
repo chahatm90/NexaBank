@@ -114,3 +114,7 @@ jobs:
         with:
           app-name: nexabank-prod-frontend
           package: ./build
+      - name: Set startup command
+        run: az webapp config set --name nexabank-prod-frontend --resource-group nexabank-prod-primary-rg --startup-file "npx serve -s /home/site/wwwroot -l 8080"
+      - name: Set port
+        run: az webapp config appsettings set --name nexabank-prod-frontend --resource-group nexabank-prod-primary-rg --settings WEBSITES_PORT=8080
